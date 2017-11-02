@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour {
     [SerializeField] private float speed;
     private float health = 100;
+    public bool allowInput = true;
 
     private Rigidbody2D rb;
     private Animator anim;
 
     [SerializeField] LayerMask interactableMask;
     [SerializeField] float interactDistance = 0.1f;
+    [SerializeField] float interactRaycastRadius = 0.2f;
     private Vector2 faceDir;
 
 	void Start () {
@@ -19,29 +21,41 @@ public class PlayerManager : MonoBehaviour {
 	}
 
     // Called once for every physics calculation time step
-    private void FixedUpdate() {
+    private void Update() {
         // track WASD for movement
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float x;
+        float y;
+
+        if (allowInput)
+        {
+            x = Input.GetAxisRaw("Horizontal");
+            y = Input.GetAxisRaw("Vertical");
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TryInteracting(Item.NONE);
+            }
+        }
+        else
+        {
+            x = 0;
+            y = 0;
+        }
 
         // set movement animation
-        anim.SetFloat("horizontalSpeed", x);
-        anim.SetFloat("verticalSpeed", y);
+        if (rb.velocity.magnitude > 0.01f)
+        {
+            faceDir = rb.velocity.normalized;
+        }
+
+        anim.SetFloat("horizontalSpeed", faceDir.x);
+        anim.SetFloat("verticalSpeed", faceDir.y);
         anim.SetBool("isMoving", x != 0 || y != 0);
 
         // actually move character
         Vector2 move = new Vector2(x, y).normalized;
         rb.velocity = move * speed;
-        faceDir = rb.velocity.magnitude > 0 ? rb.velocity.normalized : Vector2.down;
     }
-
-    // Update is called once per frame
-    void Update () {
-        if(Input.GetButtonDown("Fire1"))
-        {
-            TryInteracting(Item.NONE);
-        }
-	}
 
     protected void TryInteracting(Item item)
     {
@@ -50,7 +64,9 @@ public class PlayerManager : MonoBehaviour {
         float distance = interactDistance;
 
         Debug.DrawLine(start, start + dir.normalized * distance, Color.red, 5f);
-        RaycastHit2D hitInfo = Physics2D.Raycast(start, dir, distance, interactableMask);
+        Debug.DrawLine(start, start + Vector3.up * interactRaycastRadius, Color.red, 5f);
+        RaycastHit2D hitInfo = Physics2D.CircleCast(start, interactRaycastRadius, dir.normalized, distance, interactableMask);
+
         if(hitInfo)
         {
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
