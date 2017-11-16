@@ -120,6 +120,12 @@ GameObject:
   - component: {fileID: 75360262}
   - component: {fileID: 75360261}
   - component: {fileID: 75360264}
+  - component: {fileID: 75360266}
+  - component: {fileID: 75360268}
+  - component: {fileID: 75360269}
+  - component: {fileID: 75360265}
+  - component: {fileID: 75360267}
+  - component: {fileID: 75360270}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -151,9 +157,12 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
+  selectedBlocks:
+  - {fileID: 75360262}
   selectedCommands: []
-  variables: []
+  variables:
+  - {fileID: 75360266}
+  - {fileID: 75360270}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -193,8 +202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 273
-    y: 94
+    x: 271
+    y: 91
     width: 120
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -205,6 +214,8 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 75360261}
+  - {fileID: 75360267}
+  - {fileID: 75360265}
 --- !u!4 &75360263
 Transform:
   m_ObjectHideFlags: 0
@@ -229,6 +240,110 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834096ba508250548adeb0fb21403bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &75360265
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75360259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050fb9e6e72f442b3b883da8a965bdeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 6
+  indentLevel: 0
+  targetFlowchart: {fileID: 0}
+  targetBlock: {fileID: 75360268}
+  startLabel:
+    stringRef: {fileID: 0}
+    stringVal: 
+  startIndex: 0
+  callMode: 2
+--- !u!114 &75360266
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75360259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 0
+  key: LastItemAddedName
+  value: 
+--- !u!114 &75360267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75360259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9242ac6b2a616469c90e6af2832955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 7
+  indentLevel: 0
+  item: 1
+  quantity: 1
+--- !u!114 &75360268
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75360259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d3d73aef2cfc4f51abf34ac00241f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeRect:
+    serializedVersion: 2
+    x: 385
+    y: 154
+    width: 123
+    height: 40
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  useCustomTint: 0
+  itemId: 4
+  blockName: Pick Up Item
+  description: 
+  eventHandler: {fileID: 0}
+  commandList:
+  - {fileID: 75360269}
+--- !u!114 &75360269
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75360259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f608b8c9fb3044200aac956492d8d586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 5
+  indentLevel: 0
+  conversationText:
+    stringRef: {fileID: 0}
+    stringVal: Obatined "{$LastItemAddedName}".
+--- !u!114 &75360270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75360259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 0
+  key: LastItemRemovedName
+  value: 
 --- !u!1 &143726628
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +356,7 @@ GameObject:
   - component: {fileID: 143726631}
   - component: {fileID: 143726630}
   - component: {fileID: 143726629}
+  - component: {fileID: 143726634}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -318,6 +434,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &143726634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 143726628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a73ca07e2e72b4cb115376a817aded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTime: 0.2
 --- !u!1001 &179466711
 Prefab:
   m_ObjectHideFlags: 0

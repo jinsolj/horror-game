@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum Item
 {
-    NONE
+    NONE,
+    MUSHROOM
 }
 
 [System.Serializable]
@@ -20,22 +21,13 @@ public struct ItemEventPair
     }
 }
 
-[CreateAssetMenu(fileName ="ItemAsset", menuName ="Item Asset")]
-public class ItemInfo : ScriptableObject
-{
-    public Item item;
-    public string itemName;
-    public string description;
-    public Sprite sprite;
-}
-
 public class ItemDatabase
 {
     private static ItemInfo[] itemDatabase;
 
     public static void Init()
     {
-        itemDatabase = Resources.LoadAll<ItemInfo>("Resources/Items");
+        itemDatabase = Resources.LoadAll<ItemInfo>("Items");
     }
 
     public static ItemInfo GetInfo(Item item)
@@ -48,5 +40,16 @@ public class ItemDatabase
         Debug.LogError("No item asset can be found for that item enum.");
         return null;
 
+    }
+
+    public static ItemInfo GetInfo(string name)
+    {
+        foreach (ItemInfo itemInfo in itemDatabase)
+        {
+            if (itemInfo.itemName == name)
+                return itemInfo;
+        }
+        Debug.LogError("No item asset can be found for that item name.");
+        return null;
     }
 }

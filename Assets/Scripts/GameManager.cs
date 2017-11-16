@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        ItemDatabase.Init();
         player = FindObjectOfType<PlayerManager>();
         flowchart = FindObjectOfType<Flowchart>();
 

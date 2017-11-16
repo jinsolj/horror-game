@@ -3,9 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
+    public static PlayerManager instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = FindObjectOfType<PlayerManager>();
+            return _instance;
+        }
+    }
+
+    private static PlayerManager _instance = null;
+
     [SerializeField] private float speed;
     private float health = 100;
     public bool allowInput = true;
+    public Inventory inventory
+    {
+        get; private set;
+    }
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -13,11 +29,14 @@ public class PlayerManager : MonoBehaviour {
     [SerializeField] LayerMask interactableMask;
     [SerializeField] float interactDistance = 0.1f;
     [SerializeField] float interactRaycastRadius = 0.2f;
+    [SerializeField]
+    Vector2 interactCastOffset;
     private Vector2 faceDir;
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        inventory = new Inventory();
 	}
 
     // Called once for every physics calculation time step
@@ -59,7 +78,7 @@ public class PlayerManager : MonoBehaviour {
 
     protected void TryInteracting(Item item)
     {
-        Vector3 start = transform.position;
+        Vector3 start = transform.position + new Vector3(interactCastOffset.x, interactCastOffset.y);
         Vector3 dir = faceDir;
         float distance = interactDistance;
 
